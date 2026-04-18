@@ -35,9 +35,9 @@ on actual problem-solving.
 ## 🛠 Tech Stack
 
 - **Python 3.11+**
-- **OpenAI API** (GPT-4o) — classification and generation
-- **Streamlit** — demo web interface
-- **GitHub** — version control and portfolio
+- **OpenAI API** (GPT-4o) - classification and generation
+- **Streamlit** - demo web interface
+- **GitHub** - version control and portfolio
 
 ---
 
@@ -55,7 +55,7 @@ This project is my practical exploration of that intersection:
 
 ## 👤 About the Author
 
-**Darjan Stojanovski** — Service Operations Manager with 9+ years in SaaS support operations.
+**Darjan Stojanovski** - Service Operations Manager with 9+ years in SaaS support operations.
 ITIL4 Foundation | AWS Cloud Practitioner | Open to remote roles.
 
 🔗 [LinkedIn](linkedin.com/in/darjan-stojanovski-ab527812a)
