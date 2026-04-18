@@ -1,6 +1,6 @@
 # 🤖 AI-Powered Service Desk Assistant
 
-> **Status: ✅ Phase 1 Complete: Ticket Classifier**
+> > **Status: ✅ Phase 1 Complete | 🚧 Phase 2: Response Generator — In Development**
 
 An AI-powered service desk tool built by a 9-year service operations veteran
 to solve real problems I experienced firsthand managing 24/7 support teams.
