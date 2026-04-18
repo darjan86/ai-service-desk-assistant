@@ -1,0 +1,45 @@
+
+============================================================
+TICKET #1: My laptop won't turn on after the Windows update last night.
+------------------------------------------------------------
+Category:         Hardware
+Priority:         P2 - High
+Priority Reason:  The laptop not turning on after a Windows update indicates a potential critical issue that needs immediate attention to restore functionality.
+Suggested Reply:  Thank you for reaching out. I understand that your laptop won't turn on after the recent Windows update. Let's troubleshoot this issue together to get your device up and running as soon as possible.
+============================================================
+
+============================================================
+TICKET #2: I can't access the company VPN from home since this morning.
+------------------------------------------------------------
+Category:         Network
+Priority:         P2 - High
+Priority Reason:  The inability to access the company VPN affects the user's ability to work remotely, which is critical for productivity.
+Suggested Reply:  Thank you for reaching out. I understand that you're having trouble accessing the company VPN from home. I will investigate this issue and get back to you shortly.
+============================================================
+
+============================================================
+TICKET #3: The printer on floor 3 is showing an offline error for the whole team.
+------------------------------------------------------------
+Category:         Hardware
+Priority:         P2 - High
+Priority Reason:  The offline error affects the entire team on floor 3, impacting productivity.
+Suggested Reply:  Thank you for reporting the issue with the printer on floor 3. We will investigate the offline error and work to resolve it as quickly as possible.
+============================================================
+
+============================================================
+TICKET #4: I need a new monitor for my desk, the current one has dead pixels.
+------------------------------------------------------------
+Category:         Hardware
+Priority:         P3 - Medium
+Priority Reason:  The request for a new monitor is important but does not impact critical operations immediately.
+Suggested Reply:  Thank you for your request regarding a new monitor. We will review your request and get back to you shortly with the next steps.
+============================================================
+
+============================================================
+TICKET #5: Production database is throwing connection timeout errors — 5 users affected.
+------------------------------------------------------------
+Category:         Software
+Priority:         P1 - Critical
+Priority Reason:  The production database issue affects multiple users and could halt business operations.
+Suggested Reply:  Thank you for reporting the connection timeout errors with the production database. We understand the urgency and are currently investigating the issue to restore service as quickly as possible.
+============================================================
