@@ -1,6 +1,6 @@
 # 🤖 AI-Powered Service Desk Assistant
 
-> > **Status: ✅ Phase 1 Complete | 🚧 Phase 2: Response Generator — In Development**
+> **Status: ✅ Phase 1–2 Complete | 🚧 Phase 3: Response Generator — In Development**
 
 An AI-powered service desk tool built by a 9-year service operations veteran
 to solve real problems I experienced firsthand managing 24/7 support teams.
@@ -24,8 +24,8 @@ on actual problem-solving.
 
 | Feature | Description | Status |
 |---------|-------------|--------|
-| 🎫 Ticket Classifier | Classify ticket type and priority from description text | ✅ Complete |
-| 💬 Response Generator | AI-drafted first reply based on ticket content | 📋 Planned |
+| 🎫 Ticket Classifier | Classify ticket type and priority | ✅ Complete |
+| 💬 Response Generator | AI-drafted first reply | 🚧 In Progress |
 | 📚 KB Recommender | Match ticket to relevant knowledge base articles | 📋 Planned |
 | 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | 📋 Planned |
 | 🖥 Web Demo (Streamlit) | Interactive UI to demo all features | 📋 Planned |
