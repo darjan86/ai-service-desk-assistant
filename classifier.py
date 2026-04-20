@@ -50,49 +50,40 @@ Return only valid JSON. No explanation outside the JSON block.
 
 # --- MAIN RUNNER ---
 def main():
-    header = "=" * 60
-    output_lines = []
-
-    print(header)
+    print("=" * 60)
     print("  AI SERVICE DESK CLASSIFIER — by Darjan Stojanovski")
-    print(header)
+    print("  Type a ticket description and press Enter.")
+    print("  Type 'quit' or 'exit' to stop.")
+    print("=" * 60)
 
-    for i, ticket in enumerate(sample_tickets, 1):
+    while True:
+        print()
+        ticket = input("📩 Enter ticket: ").strip()
 
-        print(f"\nProcessing ticket {i} of {len(sample_tickets)}...")
+        if not ticket:
+            print("⚠️  Please enter a ticket description.")
+            continue
+
+        if ticket.lower() in ("quit", "exit"):
+            print("\n👋 Goodbye!")
+            break
+
+        print("\n⏳ Analysing...")
 
         try:
             raw_result = classify_ticket(ticket)
-
-            # Parse JSON so we can print it neatly
             parsed = json.loads(raw_result)
 
-            block = []
-            block.append(f"\n{'=' * 60}")
-            block.append(f"TICKET #{i}: {ticket}")
-            block.append(f"{'-' * 60}")
-            block.append(f"Category:         {parsed.get('category', 'N/A')}")
-            block.append(f"Priority:         {parsed.get('priority', 'N/A')}")
-            block.append(f"Priority Reason:  {parsed.get('priority_reason', 'N/A')}")
-            block.append(f"Suggested Reply:  {parsed.get('suggested_response', 'N/A')}")
-            block.append(f"{'=' * 60}")
-
-            for line in block:
-                print(line)
-
-            output_lines.extend(block)
+            print(f"\n{'=' * 60}")
+            print(f"  Category:        {parsed.get('category', 'N/A')}")
+            print(f"  Priority:        {parsed.get('priority', 'N/A')}")
+            print(f"  Reason:          {parsed.get('priority_reason', 'N/A')}")
+            print(f"  Suggested Reply: {parsed.get('suggested_response', 'N/A')}")
+            print(f"{'=' * 60}")
 
         except Exception as e:
-            print(f"❌ Error on ticket #{i}: {e}")
-
-    # Save all results to a text file on the Desktop
-    output_path = "classifier_results.txt"
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(output_lines))
-
-    print(f"\n✅ All done! Results saved to: {output_path}")
-    print("   Open the file to see all 5 results clearly.\n")
-
+            print(f"❌ Error: {e}")
+            
 
 if __name__ == "__main__":
     main()
