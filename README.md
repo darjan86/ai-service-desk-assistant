@@ -52,6 +52,15 @@ judgment that actually matters.
 This project is my practical exploration of that intersection:
 **service operations expertise + AI tooling**.
 
+## 🚀 Live Demo
+[Try the app here]([https://your-app-link.streamlit.app](https://darjan86-ai-service-desk-assistant.streamlit.app/)
+
+## How to Run Locally
+1. Clone the repo
+2. Install dependencies: `pip install -r requirements.txt`
+3. Create a `.env` file: `OPENAI_API_KEY=sk-your-key`
+4. Run: `python -m streamlit run app.py`
+
 ## 📸 Screenshots
 
 ### Interface
