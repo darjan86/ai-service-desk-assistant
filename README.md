@@ -38,6 +38,7 @@ on actual problem-solving.
 - **OpenAI API** (GPT-4o) - classification and generation
 - **Streamlit** - demo web interface
 - **GitHub** - version control and portfolio
+- **Sentence Transformers** (all-MiniLM-L6-v2)
 
 ---
 
@@ -55,12 +56,17 @@ This project is my practical exploration of that intersection:
 
 ### Interface
 <img width="1796" height="805" alt="Screenshot 2026-04-21 133244" src="https://github.com/user-attachments/assets/53337c51-5d17-4e04-843a-fbbebdb0e37f" />
+<img width="947" height="802" alt="Screenshot 2026-04-21 141132" src="https://github.com/user-attachments/assets/55b00d81-0057-4133-9606-00846cf549ad" />
+
 
 ### Analysis Results
 <img width="1052" height="810" alt="Screenshot 2026-04-21 133749" src="https://github.com/user-attachments/assets/255ac464-6db1-4fe0-a61b-9b191c2eed45" />
 <img width="1063" height="635" alt="Suggested response" src="https://github.com/user-attachments/assets/27fcee22-2fbc-4c5e-8f00-b3595929774a" />
 <img width="1027" height="710" alt="Screenshot 2026-04-21 133930" src="https://github.com/user-attachments/assets/0ffe21de-7509-4cc1-896b-7cd716d40b81" />
 
+### Ticket Summarizer Results
+<img width="1021" height="1026" alt="Screenshot 2026-04-21 143126" src="https://github.com/user-attachments/assets/2707faf3-557f-49db-b764-b336b2b3c0cb" />
+<img width="983" height="908" alt="Screenshot 2026-04-21 143035" src="https://github.com/user-attachments/assets/73eedcd2-3ce0-4261-b344-61a8941b9c1e" />
 
 
 ---
