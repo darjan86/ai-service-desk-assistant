@@ -27,8 +27,8 @@ on actual problem-solving.
 | 🎫 Ticket Classifier     | Classify ticket type and priority  | ✅ Complete |
 | 💬 Response Generator    | SLA-aware professional reply draft | ✅ Complete |
 | 📚 KB Recommender        | Match ticket to KB articles        | ✅ Complete |
-| 🖥 Web Demo (Streamlit)  | Interactive UI to demo all features | 📋 In Development |
-| 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | 📋 Planned |
+| 🖥 Web Demo (Streamlit)  | Interactive UI to demo all features | ✅ Complete |
+| 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | 📋 In Development |
 
 ---
 
@@ -50,6 +50,18 @@ judgment that actually matters.
 
 This project is my practical exploration of that intersection:
 **service operations expertise + AI tooling**.
+
+## 📸 Screenshots
+
+### Interface
+![App UI](<img width="1796" height="805" alt="Screenshot 2026-04-21 133244" src="https://github.com/user-attachments/assets/53337c51-5d17-4e04-843a-fbbebdb0e37f" />
+)
+
+### Analysis Results
+![App Results]<img width="1052" height="810" alt="Screenshot 2026-04-21 133749" src="https://github.com/user-attachments/assets/255ac464-6db1-4fe0-a61b-9b191c2eed45" />
+<img width="1027" height="710" alt="Screenshot 2026-04-21 133930" src="https://github.com/user-attachments/assets/0ffe21de-7509-4cc1-896b-7cd716d40b81" />
+<img width="1063" height="635" alt="Suggested response" src="https://github.com/user-attachments/assets/27fcee22-2fbc-4c5e-8f00-b3595929774a" />
+
 
 ---
 
