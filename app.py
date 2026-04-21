@@ -164,7 +164,7 @@ KNOWLEDGE_BASE = [
     }
 ]
 
-# ── LOAD MODEL (cached so it only loads once) ─────────────────────────────────
+# ── LOAD MODEL ────────────────────────────────────────────────────────────────
 
 @st.cache_resource
 def load_model_and_embeddings():
@@ -242,6 +242,51 @@ Keep it concise (4-6 sentences). Do not use placeholders like [Name].
     return response.choices[0].message.content
 
 
+def summarize_thread(thread_text):
+    # Trim thread if too long (keep first 3000 characters)
+    if len(thread_text) > 3000:
+        thread_text = thread_text[:3000] + "\n[Thread trimmed for length]"
+
+    prompt = f"""
+You are an experienced IT service desk team lead preparing a shift handover note.
+
+Analyze the following support ticket thread and return a JSON response with exactly these fields:
+- "issue_summary": a list of exactly 3 strings, each being one bullet point
+- "status": one of [Resolved, Unresolved, Escalated, Pending User Response]
+- "status_reason": one sentence explaining the current status
+- "handover_note": a ready-to-send shift handover note (3-5 sentences)
+
+Ticket thread:
+\"{thread_text}\"
+
+Return only valid JSON. No explanation outside the JSON block. Example format:
+{{
+  "issue_summary": ["Point 1", "Point 2", "Point 3"],
+  "status": "Resolved",
+  "status_reason": "Issue was resolved after rollback.",
+  "handover_note": "The incident has been resolved..."
+}}
+"""
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a precise IT service desk team lead. Always return valid JSON only, no extra text."},
+            {"role": "user",   "content": prompt}
+        ],
+        temperature=0.2,
+        max_tokens=800
+    )
+
+    raw = response.choices[0].message.content.strip()
+
+    # Strip markdown code blocks if present
+    if raw.startswith("```"):
+        raw = raw.split("```")[1]
+        if raw.startswith("json"):
+            raw = raw[4:]
+
+    return json.loads(raw)
+
 # ── PRIORITY COLOURS ──────────────────────────────────────────────────────────
 
 PRIORITY_COLORS = {
@@ -251,88 +296,175 @@ PRIORITY_COLORS = {
     "P4 - Low":      "#2CA02C",
 }
 
+STATUS_COLORS = {
+    "Resolved":              "#2CA02C",
+    "Unresolved":            "#FF4B4B",
+    "Escalated":             "#FF8C00",
+    "Pending User Response": "#1F77B4",
+}
+
 # ── UI ────────────────────────────────────────────────────────────────────────
 
 st.title("🎫 AI Service Desk Assistant")
 st.markdown("*Powered by GPT-4o-mini + Semantic KB Search*")
 st.markdown("---")
 
-st.markdown("### 📩 Submit a Ticket")
-ticket_input = st.text_area(
-    label="Describe the issue:",
-    placeholder="e.g. I can't connect to the VPN from home since this morning...",
-    height=120,
-    label_visibility="collapsed"
-)
+tab1, tab2 = st.tabs(["🔍 Ticket Analyser", "📝 Ticket Summarizer"])
 
-analyse_clicked = st.button("🔍 Analyse Ticket", type="primary", use_container_width=True)
 
-if analyse_clicked:
-    if not ticket_input.strip():
-        st.warning("⚠️ Please enter a ticket description first.")
-    else:
-        with st.spinner("Classifying ticket and searching knowledge base..."):
+# ── TAB 1: TICKET ANALYSER ────────────────────────────────────────────────────
 
-            try:
-                # Run all three phases
-                classification = classify_ticket(ticket_input)
-                kb_article, match_score = find_best_kb_article(ticket_input)
-                full_response = generate_full_response(
-                    ticket_input,
-                    classification["category"],
-                    classification["priority"],
-                    kb_article
-                )
+with tab1:
+    st.markdown("### 📩 Submit a Ticket")
+    ticket_input = st.text_area(
+        label="Describe the issue:",
+        placeholder="e.g. I can't connect to the VPN from home since this morning...",
+        height=120,
+        label_visibility="collapsed",
+        key="ticket_input"
+    )
 
-                st.markdown("---")
-                st.markdown("### 📊 Analysis Results")
+    analyse_clicked = st.button(
+        "🔍 Analyse Ticket",
+        type="primary",
+        use_container_width=True,
+        key="analyse_btn"
+    )
 
-                # Classification row
-                col1, col2 = st.columns(2)
-
-                with col1:
-                    st.markdown("**📂 Category**")
-                    st.info(classification.get("category", "N/A"))
-
-                with col2:
-                    priority = classification.get("priority", "N/A")
-                    color = PRIORITY_COLORS.get(priority, "#888888")
-                    st.markdown("**🚨 Priority**")
-                    st.markdown(
-                        f'<div style="background-color:{color}; color:white; '
-                        f'padding:8px 16px; border-radius:8px; font-weight:bold; '
-                        f'text-align:center;">{priority}</div>',
-                        unsafe_allow_html=True
+    if analyse_clicked:
+        if not ticket_input.strip():
+            st.warning("⚠️ Please enter a ticket description first.")
+        else:
+            with st.spinner("Classifying ticket and searching knowledge base..."):
+                try:
+                    classification = classify_ticket(ticket_input)
+                    kb_article, match_score = find_best_kb_article(ticket_input)
+                    full_response = generate_full_response(
+                        ticket_input,
+                        classification["category"],
+                        classification["priority"],
+                        kb_article
                     )
 
-                # Priority reason
-                st.markdown("**💡 Priority Reason**")
-                st.markdown(f"> {classification.get('priority_reason', 'N/A')}")
+                    st.markdown("---")
+                    st.markdown("### 📊 Analysis Results")
 
-                # KB article match
-                st.markdown("---")
-                st.markdown("### 📚 Knowledge Base Match")
-                kb_col1, kb_col2 = st.columns([3, 1])
-                with kb_col1:
-                    st.markdown(f"**[{kb_article['id']}] {kb_article['title']}**")
-                with kb_col2:
-                    st.metric("Relevance", f"{match_score}%")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.markdown("**📂 Category**")
+                        st.info(classification.get("category", "N/A"))
+                    with col2:
+                        priority = classification.get("priority", "N/A")
+                        color = PRIORITY_COLORS.get(priority, "#888888")
+                        st.markdown("**🚨 Priority**")
+                        st.markdown(
+                            f'<div style="background-color:{color}; color:white; '
+                            f'padding:8px 16px; border-radius:8px; font-weight:bold; '
+                            f'text-align:center;">{priority}</div>',
+                            unsafe_allow_html=True
+                        )
 
-                with st.expander("📖 View KB Article Content"):
-                    st.markdown(kb_article["content"])
+                    st.markdown("**💡 Priority Reason**")
+                    st.markdown(f"> {classification.get('priority_reason', 'N/A')}")
 
-                # Suggested response
-                st.markdown("---")
-                st.markdown("### 📧 Suggested Response")
-                st.text_area(
-                    label="Copy and send to user:",
-                    value=full_response,
-                    height=200,
-                    label_visibility="visible"
-                )
+                    st.markdown("---")
+                    st.markdown("### 📚 Knowledge Base Match")
+                    kb_col1, kb_col2 = st.columns([3, 1])
+                    with kb_col1:
+                        st.markdown(f"**[{kb_article['id']}] {kb_article['title']}**")
+                    with kb_col2:
+                        st.metric("Relevance", f"{match_score}%")
+                    with st.expander("📖 View KB Article Content"):
+                        st.markdown(kb_article["content"])
 
-            except Exception as e:
-                st.error(f"❌ Error: {e}")
+                    st.markdown("---")
+                    st.markdown("### 📧 Suggested Response")
+                    st.text_area(
+                        label="Copy and send to user:",
+                        value=full_response,
+                        height=200,
+                        label_visibility="visible",
+                        key="response_output"
+                    )
+
+                except Exception as e:
+                    st.error(f"❌ Error: {e}")
+
+
+# ── TAB 2: TICKET SUMMARIZER ──────────────────────────────────────────────────
+
+with tab2:
+    st.markdown("### 📋 Paste Ticket Thread")
+    st.markdown("Paste the full back-and-forth conversation from any ticket below.")
+
+    thread_input = st.text_area(
+        label="Ticket thread:",
+        placeholder="""e.g.
+User [09:14]: My laptop won't connect to the VPN since this morning.
+Agent [09:17]: Can you confirm which VPN client you're using?
+User [09:18]: It's Cisco AnyConnect.
+Agent [09:21]: Please try restarting the client and reconnecting.
+User [09:35]: Still not working, same error message.
+Agent [09:38]: I've escalated this to the Network team for investigation.""",
+        height=220,
+        label_visibility="collapsed",
+        key="thread_input"
+    )
+
+    summarize_clicked = st.button(
+        "📝 Summarise Thread",
+        type="primary",
+        use_container_width=True,
+        key="summarise_btn"
+    )
+
+    if summarize_clicked:
+        if not thread_input.strip():
+            st.warning("⚠️ Please paste a ticket thread first.")
+        else:
+            with st.spinner("Analysing thread and generating handover note..."):
+                try:
+                    summary = summarize_thread(thread_input)
+
+                    st.markdown("---")
+                    st.markdown("### 📊 Thread Summary")
+
+                    # Status badge
+                    status = summary.get("status", "N/A")
+                    status_color = STATUS_COLORS.get(status, "#888888")
+                    st.markdown("**Current Status**")
+                    st.markdown(
+                        f'<div style="background-color:{status_color}; color:white; '
+                        f'padding:8px 16px; border-radius:8px; font-weight:bold; '
+                        f'text-align:center; max-width:250px;">{status}</div>',
+                        unsafe_allow_html=True
+                    )
+                    st.markdown(f"> {summary.get('status_reason', 'N/A')}")
+
+                    # Issue summary bullets
+                    st.markdown("---")
+                    st.markdown("### 🔍 Issue Summary")
+                    bullets = summary.get("issue_summary", [])
+                    if isinstance(bullets, list):
+                        for bullet in bullets:
+                            st.markdown(f"• {bullet}")
+                    else:
+                        st.markdown(bullets)
+
+                    # Handover note
+                    st.markdown("---")
+                    st.markdown("### 🤝 Shift Handover Note")
+                    st.text_area(
+                        label="Ready to paste into your handover:",
+                        value=summary.get("handover_note", "N/A"),
+                        height=180,
+                        label_visibility="visible",
+                        key="handover_output"
+                    )
+
+                except Exception as e:
+                    st.error(f"❌ Error: {e}")
+
 
 # ── FOOTER ────────────────────────────────────────────────────────────────────
 
