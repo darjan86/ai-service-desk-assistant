@@ -53,7 +53,7 @@ This project is my practical exploration of that intersection:
 **service operations expertise + AI tooling**.
 
 ## 🚀 Live Demo
-[Try the app here]([https://your-app-link.streamlit.app](https://darjan86-ai-service-desk-assistant.streamlit.app/)
+[Try the app here](https://darjan86-ai-service-desk-assistant.streamlit.app/)
 
 ## How to Run Locally
 1. Clone the repo
