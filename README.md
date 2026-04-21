@@ -1,6 +1,6 @@
 # 🤖 AI-Powered Service Desk Assistant
 
-> **Status: ✅ Phases 1–4 Complete | 🚧 Phase 5: Web Demo (Streamlit) — In Development**
+> **Status: ✅ Complete
 
 An AI-powered service desk tool built by a 9-year service operations veteran
 to solve real problems I experienced firsthand managing 24/7 support teams.
@@ -28,7 +28,7 @@ on actual problem-solving.
 | 💬 Response Generator    | SLA-aware professional reply draft | ✅ Complete |
 | 📚 KB Recommender        | Match ticket to KB articles        | ✅ Complete |
 | 🖥 Web Demo (Streamlit)  | Interactive UI to demo all features | ✅ Complete |
-| 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | 📋 In Development |
+| 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | ✅ Complete |
 
 ---
 
