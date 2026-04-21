@@ -1,6 +1,6 @@
 # 🤖 AI-Powered Service Desk Assistant
 
-> **Status: ✅ Phases 1–3 Complete | 🚧 Phase 4: KB Recommender — In Development**
+> **Status: ✅ Phases 1–4 Complete | 🚧 Phase 5: Web Demo (Streamlit) — In Development**
 
 An AI-powered service desk tool built by a 9-year service operations veteran
 to solve real problems I experienced firsthand managing 24/7 support teams.
@@ -26,9 +26,9 @@ on actual problem-solving.
 |---------|-------------|--------|
 | 🎫 Ticket Classifier     | Classify ticket type and priority  | ✅ Complete |
 | 💬 Response Generator    | SLA-aware professional reply draft | ✅ Complete |
-| 📚 KB Recommender        | Match ticket to KB articles        | 🚧 In Progress |
+| 📚 KB Recommender        | Match ticket to KB articles        | ✅ Complete |
+| 🖥 Web Demo (Streamlit)  | Interactive UI to demo all features | 📋 In Development |
 | 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | 📋 Planned |
-| 🖥 Web Demo (Streamlit) | Interactive UI to demo all features | 📋 Planned |
 
 ---
 
