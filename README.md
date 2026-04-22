@@ -1,6 +1,6 @@
 # 🤖 AI-Powered Service Desk Assistant
 
-> **Status: ✅ Complete
+> **Status: ✅ Complete**
 
 An AI-powered service desk tool built by a 9-year service operations veteran
 to solve real problems I experienced firsthand managing 24/7 support teams.
@@ -29,6 +29,44 @@ on actual problem-solving.
 | 📚 KB Recommender        | Match ticket to KB articles        | ✅ Complete |
 | 🖥 Web Demo (Streamlit)  | Interactive UI to demo all features | ✅ Complete |
 | 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | ✅ Complete |
+
+---
+
+## 🏗 Architecture
+
+- Streamlit UI accepts ticket text or thread input
+
+- OpenAI generates classification / response / summary
+
+- Sentence Transformers help match tickets to KB content
+
+- Results are displayed in the web interface
+
+--> Next step: route urgent outputs into n8n workflow automation
+
+---
+
+## ⚠️ Limitations / Future Improvements
+
+- Demo version uses manual text input only
+
+- No authentication or role-based access yet
+
+- No persistent database yet
+
+- Results depend on prompt quality and LLM output consistency
+
+- Live demo uses API-backed requests, so token usage should be controlled
+
+---
+
+## ⚡Future Automation
+
+- n8n webhook integration for escalations
+
+- Google Sheets / email / Slack notification flow
+
+- possible confidence scoring or evaluation logging
 
 ---
 
