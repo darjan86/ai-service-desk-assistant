@@ -34,15 +34,18 @@ on actual problem-solving.
 
 ## 🏗 Architecture
 
-- Streamlit UI accepts ticket text or thread input
+**Tab 1 — Ticket Analyser**
+- User submits a ticket via Streamlit UI
+- OpenAI GPT-4o-mini classifies category, priority, and generates a response
+- Sentence Transformers match the ticket to the most relevant KB article via cosine similarity
 
-- OpenAI generates classification / response / summary
+**Tab 2 — Ticket Summariser**
+- User pastes a full ticket thread
+- OpenAI GPT-4o-mini generates a 3-bullet summary, status, and handover note
 
-- Sentence Transformers help match tickets to KB content
-
-- Results are displayed in the web interface
-
---> Next step: route urgent outputs into n8n workflow automation
+**Planned: n8n Automation Layer**
+- High-priority or escalated results trigger an n8n webhook
+- n8n logs to Google Sheets and sends an email/Slack notification
 
 ---
 
