@@ -324,8 +324,8 @@ with tab1:
         label_visibility="collapsed",
         key="ticket_input"
     )
-char_count_1 = len(ticket_input)
-st.caption(f"📝 {char_count_1}/2000 characters · Demo app — do not paste sensitive production data.")
+    char_count_1 = len(ticket_input)
+    st.caption(f"📝 {char_count_1}/2000 characters · Demo app — do not paste sensitive production data.")
 
     analyse_clicked = st.button(
         "🔍 Analyse Ticket",
