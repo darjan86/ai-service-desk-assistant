@@ -10,7 +10,7 @@ import streamlit as st
 load_dotenv()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-# ── PAGE CONFIG ───────────────────────────────────────────────────────────────
+# PAGE CONFIG ───────────────────────────────────────────────────────────────
 
 st.set_page_config(
     page_title="AI Service Desk Assistant",
@@ -18,7 +18,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# ── KNOWLEDGE BASE ────────────────────────────────────────────────────────────
+# KNOWLEDGE BASE ────────────────────────────────────────────────────────────
 
 KNOWLEDGE_BASE = [
     {
@@ -164,7 +164,7 @@ KNOWLEDGE_BASE = [
     }
 ]
 
-# ── LOAD MODEL ────────────────────────────────────────────────────────────────
+# LOAD MODEL ────────────────────────────────────────────────────────────────
 
 @st.cache_resource
 def load_model_and_embeddings():
@@ -174,7 +174,7 @@ def load_model_and_embeddings():
 
 embedding_model, kb_embeddings = load_model_and_embeddings()
 
-# ── FUNCTIONS ─────────────────────────────────────────────────────────────────
+# FUNCTIONS ─────────────────────────────────────────────────────────────────
 
 def classify_ticket(ticket_text):
     prompt = f"""
@@ -287,7 +287,7 @@ Return only valid JSON. No explanation outside the JSON block. Example format:
 
     return json.loads(raw)
 
-# ── PRIORITY COLOURS ──────────────────────────────────────────────────────────
+# PRIORITY COLOURS ──────────────────────────────────────────────────────────
 
 PRIORITY_COLORS = {
     "P1 - Critical": "#FF4B4B",
@@ -303,7 +303,7 @@ STATUS_COLORS = {
     "Pending User Response": "#1F77B4",
 }
 
-# ── UI ────────────────────────────────────────────────────────────────────────
+# UI ────────────────────────────────────────────────────────────────────────
 
 st.title("🎫 AI Service Desk Assistant")
 st.markdown("*Powered by GPT-4o-mini + Semantic KB Search*")
@@ -351,6 +351,7 @@ with tab1:
 
                     st.markdown("---")
                     st.markdown("### 📊 Analysis Results")
+                    st.success("Analysis completed successfully.", icon="✅")
 
                     col1, col2 = st.columns(2)
                     with col1:
@@ -435,6 +436,7 @@ Agent [09:38]: I've escalated this to the Network team for investigation.""",
 
                     st.markdown("---")
                     st.markdown("### 📊 Thread Summary")
+                    st.success("Thread analysed successfully.", icon="✅")
 
                     # Status badge
                     status = summary.get("status", "N/A")
@@ -473,7 +475,7 @@ Agent [09:38]: I've escalated this to the Network team for investigation.""",
                     st.error(f"❌ Error: {e}")
 
 
-# ── FOOTER ────────────────────────────────────────────────────────────────────
+# FOOTER ────────────────────────────────────────────────────────────────────
 
 st.markdown("---")
 st.markdown(
