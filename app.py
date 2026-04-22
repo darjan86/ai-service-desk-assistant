@@ -320,9 +320,12 @@ with tab1:
         label="Describe the issue:",
         placeholder="e.g. I can't connect to the VPN from home since this morning...",
         height=120,
+        max_chars=2000,
         label_visibility="collapsed",
         key="ticket_input"
     )
+char_count_1 = len(ticket_input)
+st.caption(f"📝 {char_count_1}/2000 characters · Demo app — do not paste sensitive production data.")
 
     analyse_clicked = st.button(
         "🔍 Analyse Ticket",
@@ -364,6 +367,7 @@ with tab1:
                             unsafe_allow_html=True
                         )
 
+
                     st.markdown("**💡 Priority Reason**")
                     st.markdown(f"> {classification.get('priority_reason', 'N/A')}")
 
@@ -387,8 +391,8 @@ with tab1:
                         key="response_output"
                     )
 
-                except Exception as e:
-                    st.error(f"❌ Error: {e}")
+                except Exception:
+                    st.error("❌ Analysis failed. Please check your input and try again. If the issue persists, the input may be too long.", icon="🚨")
 
 
 # ── TAB 2: TICKET SUMMARIZER ──────────────────────────────────────────────────
@@ -407,9 +411,12 @@ Agent [09:21]: Please try restarting the client and reconnecting.
 User [09:35]: Still not working, same error message.
 Agent [09:38]: I've escalated this to the Network team for investigation.""",
         height=220,
+        max_chars=4000,
         label_visibility="collapsed",
         key="thread_input"
     )
+char_count_2 = len(thread_input)
+st.caption(f"📝 {char_count_2}/4000 characters · Demo app — do not paste sensitive production data. Long threads may be trimmed before analysis.")
 
     summarize_clicked = st.button(
         "📝 Summarise Thread",

@@ -2,4 +2,3 @@
 __pycache__/
 *.pyc
 classifier_results.txt
-*.txt
