@@ -415,8 +415,8 @@ Agent [09:38]: I've escalated this to the Network team for investigation.""",
         label_visibility="collapsed",
         key="thread_input"
     )
-char_count_2 = len(thread_input)
-st.caption(f"📝 {char_count_2}/4000 characters · Demo app — do not paste sensitive production data. Long threads may be trimmed before analysis.")
+    char_count_2 = len(thread_input)
+    st.caption(f"📝 {char_count_2}/4000 characters · Demo app — do not paste sensitive production data. Long threads may be trimmed before analysis.")
 
     summarize_clicked = st.button(
         "📝 Summarise Thread",
