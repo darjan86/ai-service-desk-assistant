@@ -34,6 +34,8 @@ on actual problem-solving.
 
 ## 🏗 Architecture
 
+![Architecture Diagram](./assets/architecture.png)
+
 **Tab 1 — Ticket Analyser**
 - User submits a ticket via Streamlit UI
 - OpenAI GPT-4o-mini classifies category, priority, and generates a response
