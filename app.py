@@ -43,7 +43,7 @@ KNOWLEDGE_BASE = [
         Common VPN issues and fixes:
         1. Restart the VPN client application completely
         2. Check internet connection is active before launching VPN
-        3. Verify credentials — password may have expired
+        3. Verify credentials - password may have expired
         4. Try switching VPN server/region if multiple are available
         5. Disable and re-enable network adapter
         6. Reinstall VPN client if above steps fail
@@ -59,7 +59,7 @@ KNOWLEDGE_BASE = [
         2. Hold power button 30 seconds to force discharge
         3. Remove battery (if removable), hold power 15 seconds, reinsert
         4. Try booting without external devices (USB, monitors)
-        5. Check for any indicator lights — no lights may mean PSU failure
+        5. Check for any indicator lights - no lights may mean PSU failure
         6. If recent Windows update, may need recovery mode boot
         Escalate to Hardware team if no response after these steps.
         """
@@ -85,7 +85,7 @@ KNOWLEDGE_BASE = [
         1. Check printer is powered on and paper/toner are not depleted
         2. Right-click printer in Windows > See what's printing > Printer menu
         3. Uncheck 'Use Printer Offline' if checked
-        4. Clear print queue — cancel all pending jobs
+        4. Clear print queue - cancel all pending jobs
         5. Restart Print Spooler service: services.msc > Print Spooler > Restart
         6. Remove and re-add printer if above fails
         7. For network printers: verify IP address hasn't changed via printer settings page
@@ -96,11 +96,11 @@ KNOWLEDGE_BASE = [
         "title": "Database Connection Timeout",
         "content": """
         Immediate steps for database connection timeout (P1):
-        1. Check database server status — ping server IP
+        1. Check database server status - ping server IP
         2. Verify connection string in application config is correct
-        3. Check firewall rules — port 1433 (SQL) or 5432 (PostgreSQL) must be open
+        3. Check firewall rules - port 1433 (SQL) or 5432 (PostgreSQL) must be open
         4. Review database server logs for error messages
-        5. Check active connections — may have hit max connection limit
+        5. Check active connections - may have hit max connection limit
         6. Restart application service (NOT database) as temporary fix
         7. Escalate to DBA team immediately if affecting production
         Always raise a Major Incident for production DB issues affecting 3+ users.
@@ -113,7 +113,7 @@ KNOWLEDGE_BASE = [
         Process for requesting new hardware (monitors, keyboards, laptops):
         1. User submits request via Service Portal with business justification
         2. Line manager must approve requests over £500
-        3. Check asset inventory first — refurbished equipment may be available
+        3. Check asset inventory first - refurbished equipment may be available
         4. Raise purchase order via procurement system if no stock
         5. Standard lead time: 5-7 business days for in-stock items
         6. Configure device and enroll in MDM before delivery to user
@@ -139,9 +139,9 @@ KNOWLEDGE_BASE = [
         "title": "Slow Computer Performance",
         "content": """
         Steps to resolve slow computer performance:
-        1. Check Task Manager for high CPU/RAM processes — end if unnecessary
+        1. Check Task Manager for high CPU/RAM processes - end if unnecessary
         2. Run disk cleanup and clear temp files
-        3. Check available disk space — less than 10% free causes slowdowns
+        3. Check available disk space - less than 10% free causes slowdowns
         4. Scan for malware using Defender or corporate antivirus
         5. Check for pending Windows updates and install
         6. Disable startup programs: Task Manager > Startup tab
@@ -168,11 +168,11 @@ KNOWLEDGE_BASE = [
         "title": "Software Installation Request",
         "content": """
         Process for requesting software installation:
-        1. Check approved software list first — may already be pre-approved
+        1. Check approved software list first - may already be pre-approved
         2. User submits request via Service Portal with business justification
         3. Security team reviews non-standard software requests (2-3 days)
         4. IT deploys approved software via SCCM/Intune remotely
-        5. User must not install unapproved software — policy violation
+        5. User must not install unapproved software - policy violation
         6. For urgent licensed software: escalate to IT Manager for expedited review
         7. License cost must be approved by department head for paid software
         """
