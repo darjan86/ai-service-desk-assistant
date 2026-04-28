@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 classifier_results.txt
+.streamlit/secrets.toml
