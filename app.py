@@ -544,8 +544,7 @@ with tab3:
                 with kb_col1:
                     st.markdown(f"**[{kb_article['id']}] {kb_article['title']}**")
                 with kb_col2:
-                    score_display = round(match_score * 100, 1)
-                    st.metric("Relevance", f"{score_display}%")
+                    st.metric("Relevance", f"{match_score}%")
                 with st.expander("📖 View KB Article Content"):
                     st.markdown(kb_article["content"])
             else:
@@ -600,8 +599,7 @@ with tab3:
                     )
                 with sum_col3:
                     st.markdown("**📚 KB Match**")
-                    kb_status = f"{round(match_score * 100, 1)}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
-                    st.info(kb_status)
+                    kb_status = f"{match_score}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
 
             else:
                 st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
