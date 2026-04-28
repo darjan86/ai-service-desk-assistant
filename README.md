@@ -1,6 +1,6 @@
 # 🤖 AI-Powered Service Desk Assistant
 
-> **Status: ✅ Complete**
+> **Status: 🚧 Active Development — Phase 6 Complete**
 
 An AI-powered service desk tool built by a 9-year service operations veteran
 to solve real problems I experienced firsthand managing 24/7 support teams.
@@ -24,11 +24,15 @@ on actual problem-solving.
 
 | Feature | Description | Status |
 |---------|-------------|--------|
-| 🎫 Ticket Classifier     | Classify ticket type and priority  | ✅ Complete |
-| 💬 Response Generator    | SLA-aware professional reply draft | ✅ Complete |
-| 📚 KB Recommender        | Match ticket to KB articles        | ✅ Complete |
-| 🖥 Web Demo (Streamlit)  | Interactive UI to demo all features | ✅ Complete |
+| 🎫 Ticket Classifier | Classify ticket type and priority | ✅ Complete |
+| 💬 Response Generator | SLA-aware professional reply draft | ✅ Complete |
+| 📚 KB Recommender | Match ticket to KB articles | ✅ Complete |
+| 🖥 Web Demo (Streamlit) | Interactive UI to demo all features | ✅ Complete |
 | 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | ✅ Complete |
+| 🚨 Ticket Triage & Escalation | n8n webhook routing + Gmail alert for high severity | ✅ Complete |
+| 🔍 KB Suggestion Before Escalation | Suggest KB resolution before escalating | 🔄 In Progress |
+| 📊 Ticket History Log | Log and display all submitted tickets | ⏳ Planned |
+| 📈 Ops Dashboard | Visual metrics — severity counts, categories | ⏳ Planned |
 
 ---
 
@@ -45,9 +49,12 @@ on actual problem-solving.
 - User pastes a full ticket thread
 - OpenAI GPT-4o-mini generates a 3-bullet summary, status, and handover note
 
-**Planned: n8n Automation Layer**
-- High-priority or escalated results trigger an n8n webhook
-- n8n logs to Google Sheets and sends an email/Slack notification
+**Tab 3 — Ticket Triage & Escalation**
+- User submits a ticket with category and severity via Streamlit UI
+- Ticket is sent via POST request to an n8n Cloud webhook
+- n8n IF node checks severity — routes HIGH to Gmail escalation alert
+- Low/normal severity tickets receive a standard confirmation response
+- Gmail node sends an instant email alert for high priority incidents
 
 ---
 
@@ -57,21 +64,19 @@ on actual problem-solving.
 
 - No authentication or role-based access yet
 
-- No persistent database yet
-
 - Results depend on prompt quality and LLM output consistency
 
 - Live demo uses API-backed requests, so token usage should be controlled
+
+- n8n workflow requires production URL activation for persistent demo
 
 ---
 
 ## ⚡Future Automation
 
-- n8n webhook integration for escalations
-
-- Google Sheets / email / Slack notification flow
-
-- possible confidence scoring or evaluation logging
+- Google Sheets logging for ticket history (Phase 8 option)
+- Slack notification channel (alternative to Gmail)
+- Confidence scoring or evaluation logging
 
 ---
 
@@ -82,6 +87,7 @@ on actual problem-solving.
 - **Streamlit** - demo web interface
 - **GitHub** - version control and portfolio
 - **Sentence Transformers** (all-MiniLM-L6-v2)
+- **n8n Cloud** - workflow automation and escalation routing
 
 ---
 
