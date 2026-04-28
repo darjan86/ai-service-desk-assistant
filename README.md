@@ -1,6 +1,6 @@
 # 🤖 AI-Powered Service Desk Assistant
 
-> **Status: 🚧 Active Development — Phase 6 Complete**
+> **Status: 🚧 Active Development - Phase 6 Complete**
 
 An AI-powered service desk tool built by a 9-year service operations veteran
 to solve real problems I experienced firsthand managing 24/7 support teams.
