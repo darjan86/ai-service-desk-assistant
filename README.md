@@ -1,6 +1,6 @@
 # 🤖 AI-Powered Service Desk Assistant
 
-> **Status: 🚧 Active Development - Phase 6 Complete**
+> **Status: 🚧 Active Development — Phase 7 Complete**
 
 An AI-powered service desk tool built by a 9-year service operations veteran
 to solve real problems I experienced firsthand managing 24/7 support teams.
@@ -24,15 +24,15 @@ on actual problem-solving.
 
 | Feature | Description | Status |
 |---------|-------------|--------|
-| 🎫 Ticket Classifier | Classify ticket type and priority | ✅ Complete |
-| 💬 Response Generator | SLA-aware professional reply draft | ✅ Complete |
-| 📚 KB Recommender | Match ticket to KB articles | ✅ Complete |
-| 🖥 Web Demo (Streamlit) | Interactive UI to demo all features | ✅ Complete |
-| 📝 Ticket Summarizer | Summarize long threads into 3-line handover notes | ✅ Complete |
-| 🚨 Ticket Triage & Escalation | n8n webhook routing + Gmail alert for high severity | ✅ Complete |
-| 🔍 KB Suggestion Before Escalation | Suggest KB resolution before escalating | 🔄 In Progress |
-| 📊 Ticket History Log | Log and display all submitted tickets | ⏳ Planned |
-| 📈 Ops Dashboard | Visual metrics — severity counts, categories | ⏳ Planned |
+| 🎫 1. Ticket Classifier | Classify ticket type and priority | ✅ Complete |
+| 💬 2. Response Generator | SLA-aware professional reply draft | ✅ Complete |
+| 📚 3. KB Recommender | Match ticket to KB articles | ✅ Complete |
+| 🖥  4. Web Demo (Streamlit) | Interactive UI to demo all features | ✅ Complete |
+| 📝 5. Ticket Summarizer | Summarize long threads into 3-line handover notes | ✅ Complete |
+| 🚨 6. Ticket Triage & Escalation | n8n webhook routing + Gmail alert for high severity | ✅ Complete |
+| 🔍 7. KB Suggestion Before Escalation | Suggest KB resolution before escalating | ✅ Complete |
+| 📊 8. Ticket History Log | Log and display all submitted tickets | 🔄 In Progress |
+| 📈 9. Ops Dashboard | Visual metrics — severity counts, categories | ⏳ Planned |
 
 ---
 
@@ -70,9 +70,10 @@ on actual problem-solving.
 
 ## ⚡Future Automation
 
-- Google Sheets logging for ticket history (Phase 8 option)
-- Slack notification channel (alternative to Gmail)
-- Confidence scoring or evaluation logging
+- Ticket history log with persistent storage
+- Ops dashboard with visual severity and category metrics
+- Slack notification channel alongside Gmail
+- Confidence scoring and evaluation logging
 
 ---
 
@@ -83,7 +84,7 @@ on actual problem-solving.
 - **Streamlit** - demo web interface
 - **GitHub** - version control and portfolio
 - **Sentence Transformers** (all-MiniLM-L6-v2)
-- **n8n Cloud** - workflow automation and escalation routing
+- **n8n Cloud** - workflow automation, severity routing and escalation
 
 ---
 
