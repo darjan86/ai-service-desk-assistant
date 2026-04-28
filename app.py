@@ -491,28 +491,120 @@ Agent [09:38]: I've escalated this to the Network team for investigation.""",
 
 # Ticket Triage & Escalation n8n form
 with tab3:
-    st.header("🚨 Ticket Triage & Escalation")
-    st.markdown("Submit a ticket to the automated triage workflow. High severity tickets trigger an instant email alert.")
+    st.markdown("### 🚨 Ticket Triage & Escalation")
+    st.markdown("Submit a ticket for automated triage. A KB suggestion is checked first, then the ticket is routed based on severity.")
 
     with st.form("triage_form"):
-        ticket_text = st.text_area("Ticket Description", placeholder="Describe the issue...")
-        category = st.selectbox("Category", ["Access Issue", "Billing", "Incident", "Request", "Other"])
-        severity = st.selectbox("Severity", ["low", "medium", "high"])
-        submitted = st.form_submit_button("Submit to Workflow")
+        triage_input = st.text_area(
+            label="Describe the issue:",
+            placeholder="e.g. All users are locked out of the system since 9am...",
+            height=120,
+            max_chars=2000,
+            label_visibility="collapsed",
+            key="triage_input"
+        )
+        char_count_3 = len(triage_input)
+        st.caption(f"📝 {char_count_3}/2000 characters · Demo app — do not paste sensitive production data.")
+
+        col_cat, col_sev = st.columns(2)
+        with col_cat:
+            triage_category = st.selectbox(
+                "Category",
+                ["Access Issue", "Billing", "Incident", "Request", "Other"],
+                key="triage_category"
+            )
+        with col_sev:
+            triage_severity = st.selectbox(
+                "Severity",
+                ["low", "medium", "high"],
+                key="triage_severity"
+            )
+
+        submitted = st.form_submit_button(
+            "🚀 Submit to Workflow",
+            type="primary",
+            use_container_width=True
+        )
 
     if submitted:
-        if ticket_text.strip() == "":
-            st.warning("Please enter a ticket description.")
+        if not triage_input.strip():
+            st.warning("⚠️ Please enter a ticket description first.")
         else:
-            with st.spinner("Sending to n8n workflow..."):
-                success = send_to_n8n(ticket_text, category, severity)
-            if success:
-                if severity == "high":
-                    st.error("🚨 High priority ticket submitted! Email alert has been triggered.")
-                else:
-                    st.success("✅ Ticket submitted successfully and routed for handling.")
+            st.markdown("---")
+
+            # ── STEP 1: KB Suggestion ────────────────────────────────
+            st.markdown("### 📚 Knowledge Base Suggestion")
+
+            with st.spinner("Searching knowledge base..."):
+                kb_article, match_score = find_best_kb_article(triage_input)
+
+            if match_score >= 0.45:
+                st.success(f"✅ Relevant KB article found — try this before escalating.", icon="💡")
+                kb_col1, kb_col2 = st.columns([3, 1])
+                with kb_col1:
+                    st.markdown(f"**[{kb_article['id']}] {kb_article['title']}**")
+                with kb_col2:
+                    score_display = round(match_score * 100, 1)
+                    st.metric("Relevance", f"{score_display}%")
+                with st.expander("📖 View KB Article Content"):
+                    st.markdown(kb_article["content"])
             else:
-                st.error("❌ Could not reach the workflow. Check your webhook URL.")
+                st.info("ℹ️ No strong KB match found for this ticket. Proceeding to workflow routing.", icon="📋")
+
+            st.markdown("---")
+
+            # ── STEP 2: Send to n8n Workflow ─────────────────────────
+            st.markdown("### ⚙️ Workflow Routing")
+
+            with st.spinner("Sending to n8n workflow..."):
+                success = send_to_n8n(triage_input, triage_category, triage_severity)
+
+            if success:
+                if triage_severity == "high":
+                    st.error(
+                        "🚨 **High severity ticket submitted.** Escalation email alert has been triggered.",
+                        icon="🚨"
+                    )
+                elif triage_severity == "medium":
+                    st.warning(
+                        "⚠️ **Medium severity ticket submitted.** Routed for priority handling.",
+                        icon="⚠️"
+                    )
+                else:
+                    st.success(
+                        "✅ **Low severity ticket submitted.** Routed for standard handling.",
+                        icon="✅"
+                    )
+
+                # ── Routing Summary ───────────────────────────────────
+                st.markdown("---")
+                st.markdown("### 📋 Triage Summary")
+
+                sum_col1, sum_col2, sum_col3 = st.columns(3)
+                with sum_col1:
+                    st.markdown("**📂 Category**")
+                    st.info(triage_category)
+                with sum_col2:
+                    st.markdown("**🔴 Severity**")
+                    severity_colors = {
+                        "high": "#d9534f",
+                        "medium": "#f0ad4e",
+                        "low": "#5cb85c"
+                    }
+                    color = severity_colors.get(triage_severity, "#888888")
+                    st.markdown(
+                        f'<div style="background-color:{color}; color:white; '
+                        f'padding:8px 16px; border-radius:8px; font-weight:bold; '
+                        f'text-align:center;">{triage_severity.upper()}</div>',
+                        unsafe_allow_html=True
+                    )
+                with sum_col3:
+                    st.markdown("**📚 KB Match**")
+                    kb_status = f"{round(match_score * 100, 1)}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
+                    st.info(kb_status)
+
+            else:
+                st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
 
 
 # FOOTER ────────────────────────────────────────────────────────────────────
