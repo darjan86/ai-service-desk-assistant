@@ -5,7 +5,22 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
+import requests
 import streamlit as st
+
+N8N_WEBHOOK_URL = st.secrets["N8N_WEBHOOK_URL"]
+
+def send_to_n8n(ticket_text, category, severity):
+    payload = {
+        "ticket_text": ticket_text,
+        "category": category,
+        "severity": severity
+    }
+    try:
+        response = requests.post(N8N_WEBHOOK_URL, json=payload, timeout=10)
+        return response.status_code == 200
+    except Exception:
+        return False
 
 load_dotenv()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -309,11 +324,11 @@ st.title("🎫 AI Service Desk Assistant")
 st.markdown("*Powered by GPT-4o-mini + Semantic KB Search*")
 st.markdown("---")
 
-tab1, tab2 = st.tabs(["🔍 Ticket Analyser", "📝 Ticket Summarizer"])
+tab1, tab2, tab3 = st.tabs(["🔍 Ticket Analyser", "📝 Ticket Summarizer", "🚨 Ticket Triage & Escalation"])
 
 
 # ── TAB 1: TICKET ANALYSER ────────────────────────────────────────────────────
-
+# existing Ticket Classifier code
 with tab1:
     st.markdown("### 📩 Submit a Ticket")
     ticket_input = st.text_area(
@@ -397,7 +412,7 @@ with tab1:
 
 
 # ── TAB 2: TICKET SUMMARIZER ──────────────────────────────────────────────────
-
+# existing Shift Handover Summarizer code
 with tab2:
     st.markdown("### 📋 Paste Ticket Thread")
     st.markdown("Paste the full back-and-forth conversation from any ticket below.")
@@ -473,6 +488,31 @@ Agent [09:38]: I've escalated this to the Network team for investigation.""",
 
                 except Exception as e:
                     st.error(f"❌ Error: {e}")
+
+# Ticket Triage & Escalation n8n form
+with tab3:
+    st.header("🚨 Ticket Triage & Escalation")
+    st.markdown("Submit a ticket to the automated triage workflow. High severity tickets trigger an instant email alert.")
+
+    with st.form("triage_form"):
+        ticket_text = st.text_area("Ticket Description", placeholder="Describe the issue...")
+        category = st.selectbox("Category", ["Access Issue", "Billing", "Incident", "Request", "Other"])
+        severity = st.selectbox("Severity", ["low", "medium", "high"])
+        submitted = st.form_submit_button("Submit to Workflow")
+
+    if submitted:
+        if ticket_text.strip() == "":
+            st.warning("Please enter a ticket description.")
+        else:
+            with st.spinner("Sending to n8n workflow..."):
+                success = send_to_n8n(ticket_text, category, severity)
+            if success:
+                if severity == "high":
+                    st.error("🚨 High priority ticket submitted! Email alert has been triggered.")
+                else:
+                    st.success("✅ Ticket submitted successfully and routed for handling.")
+            else:
+                st.error("❌ Could not reach the workflow. Check your webhook URL.")
 
 
 # FOOTER ────────────────────────────────────────────────────────────────────
