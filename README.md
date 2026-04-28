@@ -122,9 +122,6 @@ This project is my practical exploration of that intersection:
 <img width="1021" height="1026" alt="Screenshot 2026-04-21 143126" src="https://github.com/user-attachments/assets/2707faf3-557f-49db-b764-b336b2b3c0cb" />
 <img width="983" height="908" alt="Screenshot 2026-04-21 143035" src="https://github.com/user-attachments/assets/73eedcd2-3ce0-4261-b344-61a8941b9c1e" />
 
-### Triage and Escalation
-
-
 ---
 
 ## 👤 About the Author
