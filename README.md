@@ -22,17 +22,17 @@ on actual problem-solving.
 
 ## ✨ Planned Features
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| 🎫 1. Ticket Classifier | Classify ticket type and priority | ✅ Complete |
-| 💬 2. Response Generator | SLA-aware professional reply draft | ✅ Complete |
-| 📚 3. KB Recommender | Match ticket to KB articles | ✅ Complete |
-| 🖥  4. Web Demo (Streamlit) | Interactive UI to demo all features | ✅ Complete |
-| 📝 5. Ticket Summarizer | Summarize long threads into 3-line handover notes | ✅ Complete |
-| 🚨 6. Ticket Triage & Escalation | n8n webhook routing + Gmail alert for high severity | ✅ Complete |
-| 🔍 7. KB Suggestion Before Escalation | Suggest KB resolution before escalating | ✅ Complete |
-| 📊 8. Ticket History Log | Log and display all submitted tickets | 🔄 In Progress |
-| 📈 9. Ops Dashboard | Visual metrics — severity counts, categories | ⏳ Planned |
+| Phase | Feature | Description | Status |
+|-------|---------|-------------|--------|
+| 1 |🎫Ticket Classifier | Classify ticket type and priority | ✅ Complete |
+| 2 |💬Response Generator | SLA-aware professional reply draft | ✅ Complete |
+| 3 |📚KB Recommender | Match ticket to KB articles | ✅ Complete |
+| 4 |🖥 Web Demo (Streamlit) | Interactive UI to demo all features | ✅ Complete |
+| 5 |📝Ticket Summarizer | Summarize long threads into 3-line handover notes | ✅ Complete |
+| 6 |🚨Ticket Triage & Escalation | n8n webhook routing + Gmail alert for high severity | ✅ Complete |
+| 7 |🔍KB Suggestion Before Escalation | Suggest KB resolution before escalating | ✅ Complete |
+| 8 |📊Ticket History Log | Log and display all submitted tickets | 🔄 In Progress |
+| 9 |📈Ops Dashboard | Visual metrics — severity counts, categories | ⏳ Planned |
 
 ---
 
