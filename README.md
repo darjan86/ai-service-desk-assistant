@@ -109,8 +109,7 @@ This project is my practical exploration of that intersection:
 ## 📸 Screenshots
 
 ### Interface
-<img width="1796" height="805" alt="Screenshot 2026-04-21 133244" src="https://github.com/user-attachments/assets/53337c51-5d17-4e04-843a-fbbebdb0e37f" />
-<img width="947" height="802" alt="Screenshot 2026-04-21 141132" src="https://github.com/user-attachments/assets/55b00d81-0057-4133-9606-00846cf549ad" />
+<img width="787" height="1526" alt="image" src="https://github.com/user-attachments/assets/dff4741c-9d0b-4f46-99aa-2bc4b941b43e" />
 
 
 ### Analysis Results
@@ -123,7 +122,7 @@ This project is my practical exploration of that intersection:
 <img width="983" height="908" alt="Screenshot 2026-04-21 143035" src="https://github.com/user-attachments/assets/73eedcd2-3ce0-4261-b344-61a8941b9c1e" />
 
 ### Triage and Escalation
-<img width="787" height="1526" alt="image" src="https://github.com/user-attachments/assets/dff4741c-9d0b-4f46-99aa-2bc4b941b43e" />
+
 
 ---
 
