@@ -61,13 +61,9 @@ on actual problem-solving.
 ## ⚠️ Limitations / Future Improvements
 
 - Demo version uses manual text input only
-
 - No authentication or role-based access yet
-
 - Results depend on prompt quality and LLM output consistency
-
 - Live demo uses API-backed requests, so token usage should be controlled
-
 - n8n workflow requires production URL activation for persistent demo
 
 ---
