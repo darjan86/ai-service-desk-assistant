@@ -23,6 +23,7 @@ st.set_page_config(
 )
 
 N8N_WEBHOOK_URL = st.secrets["N8N_WEBHOOK_URL"]
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def send_to_n8n(ticket_text, category, severity):
     payload = {
@@ -35,8 +36,6 @@ def send_to_n8n(ticket_text, category, severity):
         return response.status_code == 200
     except Exception:
         return False
-
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def log_ticket(title, severity, category, kb_match, escalated):
     log_file = "ticket_log.csv"
