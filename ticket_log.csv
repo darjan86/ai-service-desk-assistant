@@ -1,2 +1,4 @@
 timestamp,title,severity,category,kb_match,escalated
 2026-05-05 00:22:04,Few users are unable to login to their emails.,low,Access Issue,Microsoft 365 / Outlook Issues,No
+2026-05-05 00:48:29,Users from the office are unable to connect to the VPN client since this morning.,high,Access Issue,VPN Connection Issues,Yes
+2026-05-05 00:49:39,Some users are unable to login to their main email accounts.,medium,Incident,Microsoft 365 / Outlook Issues,No

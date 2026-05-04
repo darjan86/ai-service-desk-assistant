@@ -1,12 +1,26 @@
 import os
 import json
+import csv
 import numpy as np
+import requests
+import streamlit as st
+import pandas as pd
+import plotly.express as px
 from dotenv import load_dotenv
 from openai import OpenAI
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-import requests
-import streamlit as st
+from datetime import datetime
+
+load_dotenv()
+
+# PAGE CONFIG ───────────────────────────────────────────────────────────────
+
+st.set_page_config(
+    page_title="AI Service Desk Assistant",
+    page_icon="🎫",
+    layout="centered"
+)
 
 N8N_WEBHOOK_URL = st.secrets["N8N_WEBHOOK_URL"]
 
@@ -22,11 +36,7 @@ def send_to_n8n(ticket_text, category, severity):
     except Exception:
         return False
 
-load_dotenv()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-import csv
-import os
-from datetime import datetime
 
 def log_ticket(title, severity, category, kb_match, escalated):
     log_file = "ticket_log.csv"
@@ -43,14 +53,6 @@ def log_ticket(title, severity, category, kb_match, escalated):
             "kb_match": kb_match,
             "escalated": escalated
         })
-
-# PAGE CONFIG ───────────────────────────────────────────────────────────────
-
-st.set_page_config(
-    page_title="AI Service Desk Assistant",
-    page_icon="🎫",
-    layout="centered"
-)
 
 # KNOWLEDGE BASE ────────────────────────────────────────────────────────────
 
