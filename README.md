@@ -54,7 +54,7 @@ Visual operations metrics powered by Plotly — KPI cards (total tickets, high s
 
 ## 🏗 Architecture
 
-![Architecture Diagram](./assets/architecture diagram final.png)
+![Architecture Diagram](./assets/diagram.png)
 
 ---
 
