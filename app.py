@@ -632,8 +632,9 @@ with tab3:
                     kb_match=kb_article['title'] if match_score >= 0.45 else "No match",
                     escalated="Yes" if triage_severity == "high" else "No"
                 )
+
             else:
-            st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
+                st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
 # TAB 4: TICKET HISTORY LOG ──────────────────────────────────────────────────
 with tab4:
     st.header("📋 Ticket History Log")
