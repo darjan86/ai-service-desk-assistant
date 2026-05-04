@@ -343,11 +343,12 @@ st.title("🎫 AI Service Desk Assistant")
 st.markdown("*Powered by GPT-4o-mini + Semantic KB Search*")
 st.markdown("---")
 
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "🔍 Ticket Analyser",
     "📝 Ticket Summarizer",
     "🚨 Triage & Escalation",
-    "📋 Ticket History Log"
+    "📋 Ticket History Log",
+    "📈 Ops Dashboard"
 ])
 
 # TAB 1: TICKET ANALYSER ────────────────────────────────────────────────────
@@ -641,7 +642,7 @@ with tab3:
                     icon="⚠️"
                 )
 
-# TAB 4: TICKET HISTORY LOG ──────────────────────────────────────────────────
+# TAB 4: TICKET HISTORY LOG ────────────────────────────────────────────────
 
 with tab4:
     st.header("📋 Ticket History Log")
@@ -661,6 +662,92 @@ with tab4:
                 st.rerun()
     else:
         st.info("No tickets logged yet. Submit a ticket in the Triage & Escalation tab to start.")
+
+# TAB 5: OPS DASHBOARD ──────────────────────────────────────────────────
+
+with tab5:
+    st.header("📈 Ops Dashboard")
+
+    log_file = "ticket_log.csv"
+
+    if not os.path.isfile(log_file):
+        st.info("No ticket data yet. Submit tickets in the Triage & Escalation tab to populate the dashboard.")
+    else:
+        import pandas as pd
+        import plotly.express as px
+
+        df = pd.read_csv(log_file)
+
+        # ── KPI Cards ─────────────────────────────────────────
+        st.markdown("### 📊 Key Metrics")
+        kpi1, kpi2, kpi3 = st.columns(3)
+
+        total = len(df)
+        high_count = len(df[df["severity"] == "high"])
+        escalated_count = len(df[df["escalated"] == "Yes"])
+
+        with kpi1:
+            st.metric("🎫 Total Tickets", total)
+        with kpi2:
+            st.metric("🚨 High Severity", high_count)
+        with kpi3:
+            st.metric("📤 Escalated", escalated_count)
+
+        st.markdown("---")
+
+        # Charts ────────────────────────────────────────────
+        chart_col1, chart_col2 = st.columns(2)
+
+        with chart_col1:
+            st.markdown("### 🔴 Tickets by Severity")
+            severity_counts = df["severity"].value_counts().reset_index()
+            severity_counts.columns = ["Severity", "Count"]
+            severity_order = ["high", "medium", "low"]
+            severity_colors = {"high": "#d9534f", "medium": "#f0ad4e", "low": "#5cb85c"}
+            severity_counts["Severity"] = pd.Categorical(
+                severity_counts["Severity"], categories=severity_order, ordered=True
+            )
+            severity_counts = severity_counts.sort_values("Severity")
+            fig1 = px.bar(
+                severity_counts,
+                x="Severity",
+                y="Count",
+                color="Severity",
+                color_discrete_map=severity_colors,
+                text="Count"
+            )
+            fig1.update_layout(showlegend=False, plot_bgcolor="rgba(0,0,0,0)")
+            st.plotly_chart(fig1, use_container_width=True)
+
+        with chart_col2:
+            st.markdown("### 📂 Tickets by Category")
+            category_counts = df["category"].value_counts().reset_index()
+            category_counts.columns = ["Category", "Count"]
+            fig2 = px.pie(
+                category_counts,
+                names="Category",
+                values="Count",
+                hole=0.4
+            )
+            fig2.update_layout(showlegend=True)
+            st.plotly_chart(fig2, use_container_width=True)
+
+        st.markdown("---")
+
+        # Ticket Volume Over Time ────────────────────────────
+        st.markdown("### 🕒 Ticket Volume Over Time")
+        df["timestamp"] = pd.to_datetime(df["timestamp"])
+        df["date"] = df["timestamp"].dt.date
+        volume_by_date = df.groupby("date").size().reset_index(name="Count")
+        fig3 = px.line(
+            volume_by_date,
+            x="date",
+            y="Count",
+            markers=True,
+            labels={"date": "Date", "Count": "Tickets"}
+        )
+        fig3.update_layout(plot_bgcolor="rgba(0,0,0,0)")
+        st.plotly_chart(fig3, use_container_width=True)
 
 # FOOTER ────────────────────────────────────────────────────────────────────
 
