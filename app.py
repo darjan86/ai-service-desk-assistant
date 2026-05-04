@@ -433,7 +433,6 @@ with tab1:
                 except Exception:
                     st.error("❌ Analysis failed. Please check your input and try again. If the issue persists, the input may be too long.", icon="🚨")
 
-
 # TAB 2: TICKET SUMMARIZER ──────────────────────────────────────────────────
 # existing Shift Handover Summarizer code
 with tab2:
@@ -512,7 +511,8 @@ Agent [09:38]: I've escalated this to the Network team for investigation.""",
                 except Exception as e:
                     st.error(f"❌ Error: {e}")
 
-# TAB 3: Ticket Triage & Escalation n8n form ──────────────────────────────────────────────────
+# TAB 3: TICKET TRIAGE & ESCALATION N8N FORM ──────────────────────────────────────────────────
+
 with tab3:
     st.markdown("### 🚨 Ticket Triage & Escalation")
     st.markdown("Submit a ticket for automated triage. A KB suggestion is checked first, then the ticket is routed based on severity.")
@@ -597,7 +597,7 @@ with tab3:
                         "✅ **Low severity ticket submitted.** Routed for standard handling.",
                         icon="✅"
                     )  
-                # ── Routing Summary ───────────────────────────────────
+                # Routing Summary ───────────────────────────────────
                 st.markdown("---")
                 st.markdown("### 📋 Triage Summary")
 
@@ -635,7 +635,9 @@ with tab3:
 
             else:
                 st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
+
 # TAB 4: TICKET HISTORY LOG ──────────────────────────────────────────────────
+
 with tab4:
     st.header("📋 Ticket History Log")
 
