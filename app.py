@@ -596,18 +596,7 @@ with tab3:
                     st.success(
                         "✅ **Low severity ticket submitted.** Routed for standard handling.",
                         icon="✅"
-                    )
-                with sum_col3:
-                    st.markdown("**📚 KB Match**")
-                    kb_status = f"{match_score}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
-                # After severity/category/kb_match are determined, call:
-                log_ticket(
-                    title=triage_input,
-                    severity=triage_severity,
-                    category=triage_category,
-                    kb_match=kb_article['title'] if match_score >= 0.45 else "No match",
-                    escalated="Yes" if triage_severity == "high" else "No"
-                )   
+                    )  
                 # ── Routing Summary ───────────────────────────────────
                 st.markdown("---")
                 st.markdown("### 📋 Triage Summary")
@@ -622,16 +611,29 @@ with tab3:
                         "high": "#d9534f",
                         "medium": "#f0ad4e",
                         "low": "#5cb85c"
-                    }
-                    color = severity_colors.get(triage_severity, "#888888")
-                    st.markdown(
-                        f'<div style="background-color:{color}; color:white; '
-                        f'padding:8px 16px; border-radius:8px; font-weight:bold; '
-                        f'text-align:center;">{triage_severity.upper()}</div>',
-                        unsafe_allow_html=True
-                    )            
+                }
+                color = severity_colors.get(triage_severity, "#888888")
+                st.markdown(
+                    f'<div style="background-color:{color}; color:white; '
+                    f'padding:8px 16px; border-radius:8px; font-weight:bold; '
+                    f'text-align:center;">{triage_severity.upper()}</div>',
+                    unsafe_allow_html=True
+                )
+                with sum_col3:
+                    st.markdown("**📚 KB Match**")
+                    kb_status = f"{match_score}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
+                    st.info(kb_status)
+
+                # Log the ticket
+                log_ticket(
+                    title=triage_input,
+                    severity=triage_severity,
+                    category=triage_category,
+                    kb_match=kb_article['title'] if match_score >= 0.45 else "No match",
+                    escalated="Yes" if triage_severity == "high" else "No"
+                )
             else:
-                st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
+            st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
 # TAB 4: TICKET HISTORY LOG ──────────────────────────────────────────────────
 with tab4:
     st.header("📋 Ticket History Log")
