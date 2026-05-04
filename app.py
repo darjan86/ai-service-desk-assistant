@@ -24,6 +24,25 @@ def send_to_n8n(ticket_text, category, severity):
 
 load_dotenv()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+import csv
+import os
+from datetime import datetime
+
+def log_ticket(title, severity, category, kb_match, escalated):
+    log_file = "ticket_log.csv"
+    file_exists = os.path.isfile(log_file)
+    with open(log_file, mode="a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["timestamp", "title", "severity", "category", "kb_match", "escalated"])
+        if not file_exists:
+            writer.writeheader()
+        writer.writerow({
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "title": title,
+            "severity": severity,
+            "category": category,
+            "kb_match": kb_match,
+            "escalated": escalated
+        })
 
 # PAGE CONFIG ───────────────────────────────────────────────────────────────
 
@@ -324,10 +343,14 @@ st.title("🎫 AI Service Desk Assistant")
 st.markdown("*Powered by GPT-4o-mini + Semantic KB Search*")
 st.markdown("---")
 
-tab1, tab2, tab3 = st.tabs(["🔍 Ticket Analyser", "📝 Ticket Summarizer", "🚨 Ticket Triage & Escalation"])
+tab1, tab2, tab3, tab4 = st.tabs([
+    "🔍 Ticket Analyser",
+    "📝 Ticket Summarizer",
+    "🚨 Triage & Escalation",
+    "📋 Ticket History Log"
+])
 
-
-# ── TAB 1: TICKET ANALYSER ────────────────────────────────────────────────────
+# TAB 1: TICKET ANALYSER ────────────────────────────────────────────────────
 # existing Ticket Classifier code
 with tab1:
     st.markdown("### 📩 Submit a Ticket")
@@ -411,7 +434,7 @@ with tab1:
                     st.error("❌ Analysis failed. Please check your input and try again. If the issue persists, the input may be too long.", icon="🚨")
 
 
-# ── TAB 2: TICKET SUMMARIZER ──────────────────────────────────────────────────
+# TAB 2: TICKET SUMMARIZER ──────────────────────────────────────────────────
 # existing Shift Handover Summarizer code
 with tab2:
     st.markdown("### 📋 Paste Ticket Thread")
@@ -489,7 +512,7 @@ Agent [09:38]: I've escalated this to the Network team for investigation.""",
                 except Exception as e:
                     st.error(f"❌ Error: {e}")
 
-# Ticket Triage & Escalation n8n form
+# TAB 3: Ticket Triage & Escalation n8n form ──────────────────────────────────────────────────
 with tab3:
     st.markdown("### 🚨 Ticket Triage & Escalation")
     st.markdown("Submit a ticket for automated triage. A KB suggestion is checked first, then the ticket is routed based on severity.")
@@ -600,10 +623,35 @@ with tab3:
                 with sum_col3:
                     st.markdown("**📚 KB Match**")
                     kb_status = f"{match_score}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
-
+                # After severity/category/kb_match are determined, call:
+                log_ticket(
+                    title=ticket_title,
+                    severity=severity,       # e.g. "High", "Medium", "Low"
+                    category=category,       # e.g. "Network", "Software", etc.
+                    kb_match=kb_article,     # the KB suggestion text or "None"
+                    escalated="Yes" if severity == "High" else "No"
+                )
             else:
                 st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
+# TAB 4: TICKET HISTORY LOG ──────────────────────────────────────────────────
+with tab4:
+    st.header("📋 Ticket History Log")
 
+    log_file = "ticket_log.csv"
+
+    if os.path.isfile(log_file):
+        import pandas as pd
+        df = pd.read_csv(log_file)
+        st.dataframe(df, use_container_width=True)
+
+        col1, col2 = st.columns([1, 5])
+        with col1:
+            if st.button("🗑️ Clear Log"):
+                os.remove(log_file)
+                st.success("Log cleared.")
+                st.rerun()
+    else:
+        st.info("No tickets logged yet. Submit a ticket in the Triage & Escalation tab to start.")
 
 # FOOTER ────────────────────────────────────────────────────────────────────
 
