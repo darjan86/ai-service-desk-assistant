@@ -625,7 +625,7 @@ with tab3:
                     kb_status = f"{match_score}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
                 # After severity/category/kb_match are determined, call:
                 log_ticket(
-                    title=ticket_title,
+                    title=triage_input,
                     severity=severity,       # e.g. "High", "Medium", "Low"
                     category=category,       # e.g. "Network", "Software", etc.
                     kb_match=kb_article,     # the KB suggestion text or "None"
