@@ -634,7 +634,12 @@ with tab3:
                 )
 
             else:
-                st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
+                st.warning(
+                    "⚠️ The automation workflow is currently paused (n8n free tier). "
+                    "In a live environment this would trigger an escalation email. "
+                    "All other tabs (AI analysis, summarizer, ticket log) remain fully functional.",
+                    icon="⚠️"
+                )
 
 # TAB 4: TICKET HISTORY LOG ──────────────────────────────────────────────────
 
