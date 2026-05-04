@@ -597,7 +597,17 @@ with tab3:
                         "✅ **Low severity ticket submitted.** Routed for standard handling.",
                         icon="✅"
                     )
-
+                with sum_col3:
+                    st.markdown("**📚 KB Match**")
+                    kb_status = f"{match_score}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
+                # After severity/category/kb_match are determined, call:
+                log_ticket(
+                    title=triage_input,
+                    severity=triage_severity,
+                    category=triage_category,
+                    kb_match=kb_article['title'] if match_score >= 0.45 else "No match",
+                    escalated="Yes" if triage_severity == "high" else "No"
+                )   
                 # ── Routing Summary ───────────────────────────────────
                 st.markdown("---")
                 st.markdown("### 📋 Triage Summary")
@@ -619,18 +629,7 @@ with tab3:
                         f'padding:8px 16px; border-radius:8px; font-weight:bold; '
                         f'text-align:center;">{triage_severity.upper()}</div>',
                         unsafe_allow_html=True
-                    )
-                with sum_col3:
-                    st.markdown("**📚 KB Match**")
-                    kb_status = f"{match_score}% — {kb_article['title']}" if match_score >= 0.45 else "No strong match"
-                # After severity/category/kb_match are determined, call:
-                log_ticket(
-                    title=triage_input,
-                    severity=severity,       # e.g. "High", "Medium", "Low"
-                    category=category,       # e.g. "Network", "Software", etc.
-                    kb_match=kb_article,     # the KB suggestion text or "None"
-                    escalated="Yes" if severity == "High" else "No"
-                )
+                    )            
             else:
                 st.error("❌ Could not reach the workflow. Check your webhook URL or n8n status.", icon="🚨")
 # TAB 4: TICKET HISTORY LOG ──────────────────────────────────────────────────
