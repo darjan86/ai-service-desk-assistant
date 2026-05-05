@@ -127,6 +127,8 @@ requests
 ### Interface
 <img width="787" height="1526" alt="image" src="https://github.com/user-attachments/assets/dff4741c-9d0b-4f46-99aa-2bc4b941b43e" />
 
+<img width="912" height="1001" alt="Screenshot 2026-05-05 015414" src="https://github.com/user-attachments/assets/41053d59-9186-458a-b041-bac7b7299090" />
+
 ---
 
 ## 👤 Author
